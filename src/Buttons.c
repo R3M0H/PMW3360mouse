@@ -19,23 +19,23 @@
 // SET: PD3
 // RESET: PD2
 
-#define LEFT_DDR DDRD
-#define LEFT_PORT PORTD
-#define LEFT_PIN PIND
+#define LEFT_DDR DDRB
+#define LEFT_PORT PORTB
+#define LEFT_PIN PINB
 #define LEFT_SET 4
-#define LEFT_RESET 7
+#define LEFT_RESET 5
 
-#define RIGHT_DDR DDRC
-#define RIGHT_PORT PORTC
-#define RIGHT_PIN PINC
-#define RIGHT_SET 7
-#define RIGHT_RESET 6
+#define RIGHT_DDR DDRD
+#define RIGHT_PORT PORTD
+#define RIGHT_PIN PIND
+#define RIGHT_SET 3
+#define RIGHT_RESET 2
 
 #define MIDDLE_DDR DDRD
 #define MIDDLE_PORT PORTD
 #define MIDDLE_PIN PIND
-#define MIDDLE_SET 3
-#define MIDDLE_RESET 2
+#define MIDDLE_SET 1
+#define MIDDLE_RESET 0
 
 void buttonsInit(void){
 	// all buttons as input

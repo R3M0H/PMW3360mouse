@@ -80,22 +80,25 @@ static const uint8_t ttable[7][4] = {
 };
 #endif
 
-#define WHEEL_DDR DDRB
-#define WHEEL_PORT PORTB
-#define WHEEL_PIN PINB
-#define WHEEL_A 4
-#define WHEEL_B 5
+#define WHEEL_DDR_A DDRB
+#define WHEEL_PORT_A PORTB
+#define WHEEL_PIN_A PINB
+#define WHEEL_A 6
+#define WHEEL_DDR_B DDRF
+#define WHEEL_PORT_B PORTF
+#define WHEEL_PIN_B PINF
+#define WHEEL_B 7
 
 static uint8_t state;
 
 void rotaryInit(void) {
 	// Set pins to input.
-	WHEEL_DDR &= ~(1 << WHEEL_A);	
-	WHEEL_DDR &= ~(1 << WHEEL_B);	
+	WHEEL_DDR_A &= ~(1 << WHEEL_A);	
+	WHEEL_DDR_B &= ~(1 << WHEEL_B);	
 
 #ifdef ENABLE_PULLUPS
-	WHEEL_PORT |= (1 << WHEEL_A);	
-	WHEEL_PORT |= (1 << WHEEL_B);	
+	WHEEL_PORT_A |= (1 << WHEEL_A);	
+	WHEEL_PORT_B |= (1 << WHEEL_B);	
 #endif
 	// Initialise state.
 	state = R_START;
@@ -105,8 +108,8 @@ int8_t rotaryProcess(void) {
 	// Grab state of input pins.
 	uint8_t wheel_a;
 	uint8_t wheel_b;
-	wheel_a = (WHEEL_PIN & (1 << WHEEL_A)) ? 0x01 : 0x00;
-	wheel_b = (WHEEL_PIN & (1 << WHEEL_B)) ? 0x02 : 0x00;
+	wheel_a = (WHEEL_PIN_A & (1 << WHEEL_A)) ? 0x01 : 0x00;
+	wheel_b = (WHEEL_PIN_B & (1 << WHEEL_B)) ? 0x02 : 0x00;
 
 	// Determine new state from the pins and state table.
 	state = ttable[state & 0xf][wheel_a + wheel_b];
