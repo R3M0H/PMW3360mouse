@@ -172,7 +172,7 @@ static void defaultConfig(void){
 	//Write 0x00 to Config2 register for wired mouse or 0x20 for wireless mouse design.
 	writeRegister(Config2, 0x00);
 	// set CPI resolution
-	writeRegister(Config1, 0x08); //900 CPI
+	writeRegister(Config1, 0x09); //1000 CPI
 }
 
 
