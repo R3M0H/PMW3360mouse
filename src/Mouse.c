@@ -121,7 +121,6 @@ void SetupHardware(void)
 	USB_Init();
 	ioInit();
 	spiInit();
-	PMW3360powerUp();
 	buttonsInit();
 	rotaryInit();
 }
@@ -186,18 +185,19 @@ bool CALLBACK_HID_Device_CreateHIDReport(USB_ClassInfo_HID_Device_t* const HIDIn
 	*ReportSize = 0;
 	static uint8_t last_btn = 0;
 
-	if(motion_read[0] & 0x80){
-		*ReportSize = sizeof(USB_GamingMouseReport_Data_t);
-		*((uint8_t*)ReportData) = last_btn;
-		memcpy(ReportData+1, motion_read+2, 4);
-	}
 	if(last_btn != buttons){
 		*ReportSize = sizeof(USB_GamingMouseReport_Data_t);
 		*((uint8_t*)ReportData) = buttons;
 		last_btn = buttons;
 	}
+	if(motion_read[0] & 0x80){
+		*ReportSize = sizeof(USB_GamingMouseReport_Data_t);
+		*((uint8_t*)ReportData) = last_btn;
+		memcpy(ReportData+1, motion_read+2, 4);
+	}
 	if(wheel){
 		*ReportSize = sizeof(USB_GamingMouseReport_Data_t);
+		*((uint8_t*)ReportData) = last_btn;
 		*((uint8_t*)ReportData + 5) = wheel;
 		wheel = 0;
 	}
